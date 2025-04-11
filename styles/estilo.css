@@ -1,0 +1,185 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgb(33, 33, 33);
+    font-family: Arial;
+}
+
+header {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: auto auto; 
+    align-items: center;
+    background-color: rgb(63, 63, 63);
+    color: rgb(255, 123, 0);
+}
+
+.logo {
+    margin-left: 5%;
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+}
+
+.titulo {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    align-items: center;
+}
+
+.titulo h1 a {
+    text-align: center;
+    margin: 0;
+    text-decoration: none;
+    color: rgb(255, 123, 0);
+}
+
+header button{
+    text-decoration: none;
+    color: rgb(255, 123, 0);
+}
+
+header .menu button {
+    border-top: 0;
+    border-bottom: 0;
+}
+
+.formulario_nav {
+    width: auto;
+    grid-column: 4 / 6;
+    grid-row: 1 / 2;
+    justify-self:end;
+}
+
+.fila {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.fila input {
+    padding: 5px;
+}
+
+.fila label {
+    display: inline-block;
+    width: 100px;
+    
+    font-weight: bold;
+}
+
+.fila button {
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+.formulario_nav label {
+    font-weight: bold;
+    margin: 5px;
+}
+
+.error {
+    color: red;
+}
+
+#logout {
+    width: auto;
+    grid-column: 5/ 6;
+    grid-row: 1 / 2;
+    justify-self:end;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+#btn_logout {
+    padding: 5px 10px;
+}
+
+.menu {
+    grid-column: 1 / 6;
+    grid-row: 2 / 3;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    background-color: rgb(245, 232, 189);
+}
+
+.menu a , .menu button{
+    border-right: 1px solid rgb(255, 123, 0);
+    background-color: rgb(245, 232, 189);
+    border-left: 1px solid rgb(255, 123, 0);
+    color: black;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.pagina {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    flex: 1;
+}
+
+aside {
+    color: rgb(255, 123, 0);
+    border-right: 1px solid rgb(255, 123, 0);
+}
+
+aside h2 {
+    margin-bottom: 5%;
+}
+
+aside li {
+    margin-top: 20%;
+    text-align: left;
+    list-style-type: none;
+}
+
+aside a {
+    color: rgb(245, 232, 189);
+    text-decoration: none;
+}
+
+footer {
+    background-color: rgb(245, 232, 189);
+    color: black;
+    text-align: center;
+    padding: 1%;
+}
+
+@media (max-width: 900px) {
+    h2, .anime h3, aside a{
+        font-size: small;
+    }
+
+    header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+    
+    .logo {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: center; /* Centrado horizontalmente */
+    }
+    
+    .titulo {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: center;
+    }
+    
+    .formulario_nav {
+        grid-column: 1;
+        grid-row: 3;
+        justify-self: center;
+    }
+    
+    .menu {
+        grid-template-columns: 100%;
+    }
+}

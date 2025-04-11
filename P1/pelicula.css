@@ -1,0 +1,61 @@
+.lista_animes {
+    padding: 10px;
+    color: white;
+    text-align: left;
+}
+
+.lista_animes h2 {
+    color: rgb(255, 123, 0);
+    
+}
+
+.anime {
+    display: grid;
+    grid-template-columns: repeat(1,  400px);
+    float: right;
+}
+
+.anime figure {
+    text-align: center;
+    font-size: 13px;
+}
+
+.anime img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.redes {
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.tw, .fb, .imprimir{
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+.fb { 
+    background-color: rgb(60, 89, 153);
+}
+
+.tw { 
+    background-color: rgb(0, 195, 255);
+}
+
+.imprimir { 
+    background-color: rgb(255, 123, 0);
+}
+
+
+@media (max-width: 700px) {
+    .anime img {
+        width: 50%;
+        border-radius: 15px;
+    }
+}

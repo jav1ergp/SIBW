@@ -1,0 +1,54 @@
+.comentarios {
+    display: flex;
+    color: rgb(255, 123, 0);
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(63, 63, 63);
+}
+
+.comentarios h1 {
+    color: rgb(255, 123, 0);
+    margin-bottom: 40px;
+}
+
+.formulario {
+    background-color:  rgb(43, 43, 43);
+    border-radius: 10px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.comentarios label {
+    display: flex;
+    flex-direction: column;
+    margin: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+.comentarios input, .comentarios select {
+    padding: 12px;
+    background-color: rgb(33, 33, 33);
+    color: white;
+    margin-top: 10px;
+    border: none;
+}
+
+.comentarios button {
+    background-color: blue;
+    color: white;
+    padding: 12px;
+    margin: 10px;
+    float: right;
+    width: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+
+@media (max-width: 900px) {
+    .formulario {
+        max-width: 200px;
+    }
+}

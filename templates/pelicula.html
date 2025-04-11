@@ -1,0 +1,72 @@
+{% extends "padre.html" %}
+
+    {% block styles %}
+        <link rel="stylesheet" href="../styles/estilo.css">
+        <link rel="stylesheet" href="../styles/pelicula.css">
+        <link rel="stylesheet" href="../styles/comentarios.css">
+        <script src="../js/comentarios.js" defer></script>
+    {% endblock %}
+    
+    {% block button %}
+        <button id="show_comentarios">Comentarios</button>
+    {% endblock %}
+
+    {% block main %}
+        <main class="lista_animes">
+            <div class="comentarios">
+                <div class="formulario">
+                    <form>
+                        <label>Nombre:
+                            <input type="text" id="nombre" placeholder="Nombre">
+                        </label>
+                        <label>Email:
+                            <input type="text" id="correo" placeholder="Correo">
+                        </label>
+                        <label>Comentario:
+                            <textarea id="comentario"></textarea>
+                        </label>
+                        <button type="button" id="submit">Enviar</button>
+
+                        <div id="palabras">
+                            {%for palabra in palabras%}
+                                {{palabra}}
+                            {%endfor%}
+                        </div>
+                    </form>
+                </div>
+
+                <div class="coments">
+                    {% for comentario in comentarios %}
+                        <div class="comentario_user">
+                            <p><strong>{{ comentario.autor }}</strong> <span>{{ comentario.fecha }}</span></p>
+                            <p>{{ comentario.comentario }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="anime">
+                {% for imagen in imagenes %}
+                    <figure>
+                        <img src="data:image/jpeg;base64,{{ imagen.imagen }}" alt="{{ imagen.nombre }}">
+                        <figcaption>{{ imagen.nombre }}</figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+            <h2>{{ pelicula.titulo }}</h2>
+            <p><strong>Fecha de estreno:</strong> {{ pelicula.fecha }}</p>
+            <p><strong>Género:</strong> {{ pelicula.genero}}</p>
+            <p><strong>Director:</strong> {{ pelicula.director }}</p>
+            <p><strong>Actores principales:</strong> {{ pelicula.actores }}</p>
+
+            
+
+            <p>{{ descripcion|raw }} </p>
+
+            <div class="redes">
+                <a href="#" class="fb">Facebook</a>
+                <a href="#" class="tw">Twitter</a>
+                <a href="evento.php?id={{ id }}&imprimir=1" class="imprimir">Imprimir</a>
+            </div>
+           
+        </main>
+    {% endblock %}

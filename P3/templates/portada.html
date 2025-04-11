@@ -1,0 +1,17 @@
+{% extends "padre.html" %}
+    {% block styles %}
+        <link rel="stylesheet" href="../styles/estilo.css">
+        <link rel="stylesheet" href="../styles/portada.css">
+    {% endblock %}
+    {% block main %}
+        <main class="lista_animes">
+            {% for imagen in imagenes %}
+                <div class="anime">
+                    <a href="evento.php?id={{ imagen.id }}">
+                        <img src="data:image/jpeg;base64,{{ imagen.imagen }}" alt="{{ imagen.titulo }}">
+                        <h3>{{ imagen.titulo }}</h3>
+                    </a>
+                </div>
+            {% endfor %}
+        </main>
+    {% endblock %}

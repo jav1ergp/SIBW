@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Crunchyroll</title>
+    {% block styles %}
+    {% endblock %}
+</head>
+<body>
+    <header>
+        <img src="imagenes/crunchy.png" class="logo" alt="logo">
+    
+        <div class="titulo">
+            <h1><a href="index.php">Crunchyroll</a></h1>
+        </div>
+        
+        {% if not usuario %}
+        <div class="formulario_nav">
+            <form method="POST">
+                <div class="fila">
+                    <label for="correo">Email:</label>
+                    <input type="text" id="correo" name="correo" placeholder="Correo" required>
+                </div>
+                <div class="fila">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                    <button type="submit" name="login">Enviar</button>
+                </div>
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+            </form>
+        </div>
+        {% else %}
+        <form method="POST" id="logout">
+            <button type="submit" id="btn_logout" name="logout">Cerrar Sesion</button>
+        </form>
+        {% endif %}
+
+        
+        <nav class="menu">
+            <a></a>
+            <a href="index.php">Inicio</a>
+            <a href="#">Cartelera</a>
+            {% if usuario %}
+                <a href="panel.php">Panel Control</a>
+            {% else %}
+                <a href="registro.php">Registro</a>
+            {% endif%}
+            
+            {% block button %}
+            {% endblock %}
+        </nav>
+    </header>
+    <div class="pagina">
+        <aside>
+            <h2>Enlaces de Interés</h2>
+            <ul>
+                <li><a href="https://www.crunchyroll.com" target="_blank">Crunchyroll</a></li>
+                <li><a href="https://www.imdb.com" target="_blank">IMDb</a></li>
+                <li><a href="https://www.livechart.me/rankings" target="_blank">LiveChart</a></li>
+            </ul>
+        </aside>
+
+        {% block main %}
+        {% endblock %}
+    </div>
+    <footer>
+        <p>&copy; 2025 Crunchyroll</p>
+        <p>Javier Garcia Perez</p>
+    </footer>
+</body>
+</html>

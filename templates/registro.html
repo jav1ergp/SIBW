@@ -1,0 +1,33 @@
+{% extends "padre.html" %}
+    {% block styles %}
+        <link rel="stylesheet" href="../styles/estilo.css">
+        <link rel="stylesheet" href="../styles/registro.css">
+    {% endblock %}
+    {% block main %}
+    
+    <div class="comentarios">
+        <h1>Registro</h1>
+        <div class="formulario">
+            <form>
+                <label>Nombre:
+                    <input type="text" id="nombre" placeholder="Nombre">
+                </label>
+                <label>Email:
+                    <input type="text" id="correo" placeholder="Correo">
+                </label>
+                <label>Contraseña:
+                    <input type="password" id="password" placeholder="Contraseña">
+                </label>
+                <label>Rol:
+                    <select id="rol">
+                        <option value="registrado">Usuario registrado</option>
+                        <option value="moderador">Usuario moderador</option>
+                        <option value="gestor">Usuario gestor del sitio</option>
+                        <option value="superusuario">Superusuario</option>
+                    </select>
+                </label>
+                <button type="button" id="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
