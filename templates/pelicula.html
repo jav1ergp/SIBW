@@ -25,8 +25,11 @@
                         <label>Comentario:
                             <textarea id="comentario"></textarea>
                         </label>
-                        <button type="button" id="submit">Enviar</button>
-
+                        {% if usuario %}
+                            <button type="button" id="submit">Enviar</button>
+                        {% else %}
+                            <button type="button" id="submit" disabled>Enviar</button>
+                        {% endif%}
                         <div id="palabras">
                             {%for palabra in palabras%}
                                 {{palabra}}

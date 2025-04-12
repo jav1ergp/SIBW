@@ -88,16 +88,19 @@ header .menu button {
     color: red;
 }
 
-#logout {
-    width: auto;
-    grid-column: 5/ 6;
+.botones{
+    grid-column: 4/ 6;
     grid-row: 1 / 2;
+    display: flex;
     justify-self:end;
-    margin-right: 10px;
+}
+
+#logout , #perfil{
+    width: auto;
     padding: 5px 10px;
 }
 
-#btn_logout {
+#btn_logout, #btn_perfil {
     padding: 5px 10px;
 }
 

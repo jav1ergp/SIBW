@@ -4,16 +4,16 @@
         <link rel="stylesheet" href="../styles/registro.css">
     {% endblock %}
     {% block main %}
-    
+
     <div class="comentarios">
-        <h1>Registro</h1>
+        <h1>Perfil</h1>
         <div class="formulario">
             <form method="POST">
                 <label>Nombre:
-                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+                    <input type="text" name="nombre" id="nombre" value="{{nombre}}" placeholder="Nombre" required>
                 </label>
                 <label>Email:
-                    <input type="text" name="correo" id="correo" placeholder="Correo" required>
+                    <input type="text" name="correo" id="correo" value="{{email}}"placeholder="Correo" readonly>
                 </label>
                 <label>Contraseña:
                     <input type="password" name="password" id="password" placeholder="Contraseña" required>
@@ -29,8 +29,10 @@
                 {% if error2 %}
                         <p class="error">{{ error2 }}</p>
                 {% endif %}
-                <button type="submit" name="registro">Enviar</button>
+                <button type="submit" name="modificar">Enviar</button>
             </form>
         </div>
     </div>
+
+
     {% endblock %}

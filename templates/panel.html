@@ -5,6 +5,8 @@
     {% endblock %}
     {% block main %}
     
-    <h1>Panel de control</h1>
+        {%if rol == "user"%}
+            <h1>Panel de control</h1>
+        {% endif %}
 
     {% endblock %}

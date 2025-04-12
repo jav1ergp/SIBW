@@ -4,16 +4,13 @@
         
         $email = $conn->real_escape_string($email);
 
-        // Consultar la base de datos por el usuario
         $sql = "SELECT Nombre, Passwordd, Rol FROM Usuarios WHERE Email = '$email'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
-            // Si el usuario existe, verificar la contraseña
             $row = $result->fetch_assoc();
 
-            if ($password == $row['Passwordd']) {
-                // La contraseña es correcta, retornar la información del usuario
+            if (password_verify($password, $row['Passwordd'])) {
                 return [
                     'nombre' => $row['Nombre'],
                     'email' => $email,
@@ -22,7 +19,45 @@
             }
         }
 
-        // Si las credenciales no son correctas, retornar false
         return false;
     }
+
+    function registrarUsuario($nombre, $email, $password, $rol) {
+        global $conn;
+
+        if (!esValido($email)){
+            return False;
+        }
+        
+        $stmt = $conn->prepare("INSERT INTO Usuarios (Email, Nombre, Passwordd, Rol) VALUES (?,?,?,?)");
+        $stmt->bind_param("ssss", $email, $nombre, $password, $rol);
+
+        return $stmt->execute();
+
+    }
+
+    function esValido($email) {
+        global $conn;
+        $stmt = $conn->prepare("SELECT Email FROM Usuarios WHERE Email = (?)");
+        $stmt->bind_param("s", $email);
+
+        $stmt->execute();
+
+        $stmt->store_result();
+
+        if($stmt -> num_rows > 0) {
+            return false;
+        }
+        return true;
+    }
+
+    function modificarUsuario($nombre, $email, $password, $rol) {
+        global $conn;
+    
+        $stmt = $conn->prepare("UPDATE Usuarios SET Nombre=?, Passwordd=?, Rol=? WHERE Email=?");
+        $stmt->bind_param("ssss", $nombre, $password, $rol, $email);
+    
+        return $stmt->execute();
+    }
+    
 ?>

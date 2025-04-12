@@ -3,6 +3,7 @@
     require_once 'db/db_connection.php';
     require_once 'db/db_operaciones.php';
     require_once 'db/db_operaciones_user.php';
+    require_once 'db/request.php';
 
     $loader = new \Twig\Loader\FilesystemLoader('templates');
     $twig = new \Twig\Environment($loader);
@@ -11,34 +12,17 @@
         session_start();
     }
 
-    $error = null;
-    
-    if(isset($_POST['login'])) {
-        $email = $_POST['correo'];
-        $password = $_POST['password'];
-        $usuarioValido = verificarUsuario($email, $password);
-        
-        if ($usuarioValido) {
-            $_SESSION['usuario'] = $usuarioValido;
-            $usuario = true;
-        } else {
-            $error = "Credenciales incorrectas.";
-        }
-    }
-
-    if(isset($_POST['logout'])) {
-        $_SESSION['usuario'] = [];
-        session_destroy();
-
-        header("Location: index.php"); // redirige después de logout
-        exit;
+    if(isset($_SESSION['error'])){
+        $error = $_SESSION['error'];
+        unset($_SESSION['error']);
+    } else{
+        $error = null;
     }
 
     if(isset($_SESSION['usuario']))
         $usuario = true;
     else
         $usuario = false;
-
 
     $ImagenesIndex = getImagenesIndex();
 
