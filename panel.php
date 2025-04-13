@@ -18,9 +18,11 @@
         header("Location: index.php");
         exit;
     }
-    
+
+    $Peliculas = getComentPeliculas();
     echo $twig->render("panel.html", [
         'usuario' => $usuario,
-        'rol' => $rol
+        'rol' => $rol,
+        'pelicula' => $Peliculas
     ]);
 ?>

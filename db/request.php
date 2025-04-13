@@ -57,22 +57,42 @@
         }
     }
 
-    if(isset($_POST['modificar'])) {
+    if(isset($_POST['modificar']) and isset($_SESSION['usuario'])) {
         $nombre = $_POST['nombre'];
         $email = $_POST['correo'];
+        $email_viejo = $_SESSION['usuario']['email'];
         $password = $_POST['password'];
         $rol = $_POST['rol'];
-
         $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
-        $modificar = modificarUsuario($nombre, $email, $password_hashed, $rol);
+        $modificar = modificarUsuario($nombre, $email, $email_viejo, $password_hashed, $rol);
 
         if ($modificar) {
+            $_SESSION['usuario'] = [];
+            session_unset();
+            session_destroy();
             header("Location: index.php");
             exit;
         } else {
             $_SESSION['error_modificar'] = "Error al modificar el usuario.";
             header("Location: perfil.php");
+            exit;
+        }
+    }
+
+    if(isset($_POST['Modificar_coment'])) {
+        $comentario = $_POST['comentario'];
+        $id = $_POST['id'];
+
+        $modificar = modificarComentario($comentario, $id);
+
+        if ($modificar) {
+            header("Location: index.php");
+            exit;
+        } else {
+            $_SESSION['error_modificar_coment'] = "Error al modificar el comentario.";
+            $_SESSION['id'] = $id;
+            header("Location: editar_comentario.php");
             exit;
         }
     }

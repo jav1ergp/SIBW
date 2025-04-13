@@ -46,6 +46,19 @@
     border: none;
 }
 
+.comentarios .Modificar_coment {
+    color: rgb(255, 123, 0);
+    
+}
+
+.text_Modificar_coment {
+    width: 400px;
+    height: 400px;
+    resize: vertical;
+    padding: 20px;
+    margin: 15px;
+}
+
 
 @media (max-width: 900px) {
     .formulario {

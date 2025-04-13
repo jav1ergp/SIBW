@@ -51,11 +51,32 @@
         return true;
     }
 
-    function modificarUsuario($nombre, $email, $password, $rol) {
+    function modificarUsuario($nombre, $email, $email_viejo, $password, $rol) {
         global $conn;
     
-        $stmt = $conn->prepare("UPDATE Usuarios SET Nombre=?, Passwordd=?, Rol=? WHERE Email=?");
-        $stmt->bind_param("ssss", $nombre, $password, $rol, $email);
+        if($email != $email_viejo) {
+            if(!esValido($email)){
+                return false;
+            }
+        }
+
+        $stmt = $conn->prepare("UPDATE Usuarios SET Nombre=?, Email=?, Passwordd=?, Rol=? WHERE Email=?");
+        $stmt->bind_param("sssss", $nombre, $email, $password, $rol, $email_viejo);
+    
+        return $stmt->execute();
+    }
+
+    function modificarComentario($comentario, $id){
+        global $conn;
+
+        if(empty($comentario) ) {
+            return false;
+        }
+
+        $comentario = $comentario . "\n*Mensaje editado por un Moderador*";
+
+        $stmt = $conn->prepare("UPDATE Comentario SET Comentario=? WHERE id=?");
+        $stmt->bind_param("ss", $comentario, $id,);
     
         return $stmt->execute();
     }

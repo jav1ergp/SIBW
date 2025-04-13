@@ -1,0 +1,55 @@
+.coments {
+    max-width: 800px;
+    justify-self: center;
+}
+
+.coments h2 {
+    color: rgb(255, 123, 0);
+}
+
+.pelicula {
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.pelicula h3 {
+    color: rgb(255, 123, 0);
+    background-color:  rgb(63, 63, 63);
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    padding: 15px 20px;
+}
+
+.comentarios_ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.comentario_user {
+    padding: 15px;
+    border-bottom: 1px solid grey;
+}
+
+.comentario-item:last-child {
+    border-bottom: none;
+}
+
+p {
+    margin: 0;
+}
+
+span {
+    float: right;
+}
+
+.acciones-comentario a {
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.editado {
+    color: gray;
+    font-style: italic;
+}

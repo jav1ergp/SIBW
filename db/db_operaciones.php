@@ -95,4 +95,51 @@
             die("Error en la URL");
         }
     }
+
+    function getComentPeliculas(){
+        global $conn;
+
+        $sql = "SELECT Pelicula.Titulo, Comentario.id, Comentario.Comentario, Comentario.Autor, Comentario.Email, Comentario.Fecha, Comentario.Editado
+                FROM Pelicula JOIN Comentario 
+                ON Pelicula.id = Comentario.idPelicula";
+        $result = $conn->query($sql);
+
+        $comentarios_por_pelicula = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $titulo = $row['Titulo'];
+        
+            if (!isset($comentarios_por_pelicula[$titulo])) {
+                $comentarios_por_pelicula[$titulo] = [];
+            }
+        
+            $comentarios_por_pelicula[$titulo][] = [
+                'comentario' => $row['Comentario'],
+                'autor' => $row['Autor'],
+                'fecha' => $row['Fecha'],
+                'id' => $row['id'],
+                'editado' => $row['Editado'] ?? false
+            ];
+        }
+
+        return $comentarios_por_pelicula;
+    }
+
+    function getComentario($id) {
+        esNumero($id);
+        global $conn;
+        
+        $sql = "SELECT Autor, Fecha, Email, Comentario FROM Comentario WHERE id = $id";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+
+        $comentario = [
+            'autor' => $row["Autor"],
+            'fecha' => $row["Fecha"],
+            'email' => $row["Email"],
+            'comentario' => $row["Comentario"]
+        ];
+
+        return $comentario;
+    }
 ?>
