@@ -6,16 +6,59 @@
         $sql = "SELECT Titulo, Fecha, Genero, Director, Actores, descripcion FROM Pelicula WHERE id = $id";
         $result = $conn->query($sql);
         $row = $result->fetch_assoc();
+
+        if (!$row) {
+            return null;
+        }
+        
+        $fecha = date("Y-m-d", strtotime($row["Fecha"]));
+
         $pelicula = array(
             'titulo' => $row["Titulo"],
-            'fecha' => $row["Fecha"],
+            'fecha' => $fecha,
             'genero' => $row["Genero"],
             'director' => $row["Director"],
             'actores' => $row["Actores"],
             'descripcion' => $row["descripcion"]
         );
-
+        
         return $pelicula;
+    }
+
+    function getPeliculas() {
+        global $conn;
+        
+        $sql = "SELECT Titulo, id FROM Pelicula";
+        $result = $conn->query($sql);
+        
+        $peliculas = [];
+        
+        while ($row = $result->fetch_assoc()) {
+            $peliculas[] = array(
+                'titulo' => $row["Titulo"],
+                'id' => $row["id"]
+            );
+        }
+        
+        return $peliculas;
+    }
+
+    function getUsuarios() {
+        global $conn;
+        
+        $sql = "SELECT Email, Rol FROM Usuarios";
+        $result = $conn->query($sql);
+        
+        $usuarios = [];
+        
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = array(
+                'email' => $row["Email"],
+                'rol' => $row["Rol"]
+            );
+        }
+        
+        return $usuarios;
     }
 
     function getComentarios($id) {
@@ -142,4 +185,48 @@
 
         return $comentario;
     }
+
+    function getUsuario($email) {    
+        global $conn;
+    
+        $stmt = $conn->prepare("SELECT Nombre, Email, Passwordd, Rol FROM Usuarios WHERE Email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        if (!$row) return null;
+    
+        return [
+            'nombre' => $row["Nombre"],
+            'email' => $row["Email"],
+            'password' => $row["Passwordd"],
+            'rol' => $row["Rol"]
+        ];
+    }
+    
+
+    function modificarRol($email, $rol) {    
+        global $conn;
+    
+        $stmt = $conn->prepare("UPDATE Usuarios SET Rol = ? WHERE Email = ?");
+        $stmt->bind_param("ss", $rol, $email);
+    
+        return $stmt->execute();
+    }
+
+    function contarSupers() {
+        global $conn;
+    
+        $stmt = $conn->prepare("SELECT COUNT(*) as total FROM Usuarios WHERE Rol = 'superusuario'");
+        $stmt->execute();
+    
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        return $row['total'];
+    }
+    
+
 ?>

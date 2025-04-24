@@ -1,0 +1,39 @@
+{% extends "padre.html" %}
+    {% block styles %}
+        <link rel="stylesheet" href="../styles/estilo.css">
+        <link rel="stylesheet" href="../styles/registro.css">
+    {% endblock %}
+    {% block main %}
+
+    <div class="comentarios">
+        <h1>Perfil</h1>
+        <div class="formulario">
+            <form method="POST">
+                <label>Nombre:
+                    <input type="text" name="nombre" id="nombre" value="{{Usuarios.nombre}}" disabled>
+                </label>
+                <label>Email:
+                    <input type="text" name="email" id="email" value="{{Usuarios.email}}" readonly>
+                </label>
+                <label>Contraseña:
+                    <input type="password" name="password" id="password" value="{{Usuarios.password}}" disabled>
+                </label>
+                <label>Rol:
+                    <select name="rol" id="rol" required>
+                        <option value="registrado" {% if Usuarios.rol == 'registrado' %}selected{% endif %}>Usuario registrado</option>
+                        <option value="moderador" {% if Usuarios.rol == 'moderador' %}selected{% endif %}>Usuario moderador</option>
+                        <option value="gestor" {% if Usuarios.rol == 'gestor' %}selected{% endif %}>Usuario gestor del sitio</option>
+                        <option value="superusuario" {% if Usuarios.rol == 'superusuario' %}selected{% endif %}>Superusuario</option>
+                    </select>
+                </label>      
+                <input type="hidden" name="previoRol" value="{{Usuarios.rol}}">          
+                <button type="submit" name="modificarRol">Enviar</button>
+                {% if error_super %}
+                    <p class="error">{{ error_super }}</p>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+
+    {% endblock %}

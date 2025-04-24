@@ -15,9 +15,6 @@
                 <textarea id="comentario" name="comentario" class="text_Modificar_coment"> {{ comentario.comentario }} </textarea>
             </label>
             <button type="submit" id="submit" name="Modificar_coment">Enviar</button>
-            {% if error_coment %}
-                <p class="error">{{ error_coment }}</p>
-            {% endif %}
         </form>     
     </div>
 {% endif %}

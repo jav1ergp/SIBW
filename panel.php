@@ -20,9 +20,14 @@
     }
 
     $Peliculas = getComentPeliculas();
+    $PeliculasBorrar = getPeliculas();
+    $Usuarios = getUsuarios();
+
     echo $twig->render("panel.html", [
         'usuario' => $usuario,
         'rol' => $rol,
-        'pelicula' => $Peliculas
+        'pelicula' => $Peliculas,
+        'pelicula_borrar' => $PeliculasBorrar,
+        'usuarios' => $Usuarios
     ]);
 ?>

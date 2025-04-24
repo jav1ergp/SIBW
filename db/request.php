@@ -48,6 +48,9 @@
         $registro = registrarUsuario($nombre, $email, $password_hashed, $rol);
 
         if ($registro) {
+            $usuarioValido = verificarUsuario($email, $password);
+            $_SESSION['usuario'] = $usuarioValido;
+            $usuario = true;
             header("Location: index.php");
             exit;
         } else {
@@ -62,8 +65,13 @@
         $email = $_POST['correo'];
         $email_viejo = $_SESSION['usuario']['email'];
         $password = $_POST['password'];
-        $rol = $_POST['rol'];
         $password_hashed = password_hash($password, PASSWORD_DEFAULT);
+
+        if ($_SESSION['usuario']['rol'] == "superusuario") {
+            $rol = $_POST['rol'];
+        } else {
+            $rol = $_SESSION['usuario']['rol'];
+        }
 
         $modificar = modificarUsuario($nombre, $email, $email_viejo, $password_hashed, $rol);
 
@@ -93,6 +101,94 @@
             $_SESSION['error_modificar_coment'] = "Error al modificar el comentario.";
             $_SESSION['id'] = $id;
             header("Location: editar_comentario.php");
+            exit;
+        }
+    }
+
+    if(isset($_POST['Borrar_coment'])) {
+        $id = $_POST['id'];
+
+        borrarComentario($id);
+
+        header("Location: index.php");
+        exit;        
+    }
+
+    if(isset($_POST['Borrar_pelicula'])) {
+        $id = $_POST['id'];
+
+        borrarPelicula($id);
+
+        header("Location: index.php");
+        exit;        
+    }
+
+    if(isset($_POST['añadirPelicula'])) {
+        $titulo = $_POST['titulo'];
+        $date = $_POST['fecha'];
+        $genero = $_POST['genero'];
+        $director = $_POST['director'];
+        $actores = $_POST['actores'];
+        $descripcion = $_POST['descripcion'];
+        $imagen_tmp = $_FILES['imagen']['tmp_name'];
+        $imagen_data = file_get_contents($imagen_tmp);
+
+        $pelicula = añadirPelicula($titulo, $date, $genero, $director, $actores, $descripcion);
+        añadirImagenPortada($titulo, $imagen_data, $pelicula);
+
+        if ($pelicula) {
+            header("Location: index.php");
+            exit;
+        } else {
+            $_SESSION['error_pelicula'] = "Error al registrar una pelicula.";
+            header("Location: añadir_pelicula.php");
+            exit;
+        }
+    }
+
+    if(isset($_POST['editarPelicula'])) {
+        $id = $_POST['id'];
+        $titulo = $_POST['titulo'];
+        $date = $_POST['fecha'];
+        $genero = $_POST['genero'];
+        $director = $_POST['director'];
+        $actores = $_POST['actores'];
+        $descripcion = $_POST['descripcion'];
+        if(isset( $_POST['imagen_titulo'])){
+            $imagen_titulo = $_POST['imagen_titulo'];
+        }
+
+        $pelicula = editarPelicula($id, $titulo, $date, $genero, $director, $actores, $descripcion);
+        
+        if ($pelicula && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+            $imagen_tmp = $_FILES['imagen']['tmp_name'];
+            $imagen_data = file_get_contents($imagen_tmp);
+    
+            añadirImagen($imagen_titulo, $imagen_data, $id);
+        }
+
+        if ($pelicula) {
+            header("Location: index.php");
+            exit;
+        } else {
+            $_SESSION['error_pelicula'] = "Error al modificar una pelicula.";
+            header("Location: editar_pelicula2.php");
+            exit;
+        }
+    }
+
+    if(isset($_POST['modificarRol'])) {
+        $email = $_POST['email'];
+        $rol = $_POST['rol'];
+        $previoRol = $_POST['previoRol'];
+        $nsupers = contarSupers();
+        
+        if($previoRol == "superusuario" && $previoRol != $rol && $nsupers == 1) {
+            header("Location: panel.php");
+            exit;
+        } else {
+            modificarRol($email, $rol);
+            header("Location: index.php");
             exit;
         }
     }

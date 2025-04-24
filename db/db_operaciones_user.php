@@ -76,9 +76,79 @@
         $comentario = $comentario . "\n*Mensaje editado por un Moderador*";
 
         $stmt = $conn->prepare("UPDATE Comentario SET Comentario=? WHERE id=?");
-        $stmt->bind_param("ss", $comentario, $id,);
+        $stmt->bind_param("ss", $comentario, $id);
+    
+        return $stmt->execute();
+    }
+
+    function borrarComentario($id) {
+        global $conn;
+
+        $stmt = $conn->prepare("DELETE FROM Comentario WHERE id=?");
+        $stmt->bind_param("s", $id);
     
         return $stmt->execute();
     }
     
+    function borrarPelicula($id) {
+        global $conn;
+
+        $stmt = $conn->prepare("DELETE FROM Pelicula WHERE id=?");
+        $stmt->bind_param("s", $id);
+    
+        return $stmt->execute();
+    }
+
+    function añadirPelicula($titulo, $date, $genero, $director, $actores, $descripcion) {
+        global $conn;
+
+        $stmt = $conn->prepare("INSERT INTO Pelicula (Titulo, Fecha, Genero, Director, Actores, descripcion) VALUES (?,?,?,?,?,?)");
+        $stmt->bind_param("ssssss", $titulo, $date, $genero, $director, $actores, $descripcion);
+
+        if ($stmt->execute()) {
+            return $conn->insert_id;
+        } else {
+            return false;
+        }
+    }
+
+    function editarPelicula($id, $titulo, $date, $genero, $director, $actores, $descripcion) {
+        global $conn;
+
+        $stmt = $conn->prepare("UPDATE Pelicula SET Titulo = ?, Fecha = ?, Genero = ?, Director = ?, Actores = ?, descripcion = ? WHERE id = ?");
+    
+        if (!$stmt) {
+            return false;
+        }
+        
+        $stmt->bind_param("ssssssi", $titulo, $date, $genero, $director, $actores, $descripcion, $id);
+
+        $result = $stmt->execute();
+        $stmt->close();
+        
+        return $result;
+    }
+
+    function añadirImagenPortada($titulo, $imagen, $idPelicula) {
+        global $conn;
+    
+        $es_index = true;
+    
+        $stmt = $conn->prepare("INSERT INTO Imagenes (Nombre, imagen, idPelicula, es_index) VALUES (?, ?, ?, ?)");
+        $stmt->send_long_data(1, $imagen);
+        $stmt->bind_param("ssii", $titulo, $imagen, $idPelicula, $es_index);
+    
+        return $stmt->execute();
+    }
+    function añadirImagen($titulo, $imagen, $idPelicula) {
+        global $conn;
+    
+        $es_index = false;
+    
+        $stmt = $conn->prepare("INSERT INTO Imagenes (Nombre, imagen, idPelicula, es_index) VALUES (?, ?, ?, ?)");
+        $stmt->send_long_data(1, $imagen);
+        $stmt->bind_param("sssi", $titulo, $imagen, $idPelicula, $es_index);
+    
+        return $stmt->execute();
+    }
 ?>

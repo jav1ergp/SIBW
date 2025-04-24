@@ -4,37 +4,92 @@
         <link rel="stylesheet" href="../styles/panel.css">
     {% endblock %}
     {% block main %}
-    
-    {% if rol == "moderador" %}
-    <div class="coments">
-        <h2>Listado de Comentarios</h2>
-        
-        {% for Titulo, comentario in pelicula %}
+
+    <div>
+        {% if rol == "superusuario" %}
+        <div class="coments">
+            <h2>Listado de Usuarios</h2>
+
+            {% for user in usuarios %}
+            <div class="pelicula">
+                <h3>{{ user.email }}</h3>
+                <div class="acciones-comentario">
+                    <form action="editar_user.php" method="post">
+                        <input type="hidden" name="email" value="{{ user.email }}">
+                        <button type="submit" class="borrar">
+                            ✏️ Editar
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if rol == "gestor" or rol == "superusuario" %}
+        <div class="coments">
+            <h2>Listado de Películas</h2>
+            
+            <form action="añadir_pelicula.php" method="post" class="form-anadir">
+                <button type="submit" class="anadir">
+                    ➕ Añadir Película
+                </button>
+            </form>
+
+            {% for pelicula in pelicula_borrar %}
+            <div class="pelicula">
+                <h3>{{ pelicula.titulo }}</h3>
+                <div class="acciones-comentario">
+                    <form action="borrar_pelicula.php" method="post">
+                        <input type="hidden" name="id" value="{{ pelicula.id }}">
+                        <button type="submit" class="borrar">
+                            🗑️ Eliminar
+                        </button>
+                    </form>
+                    <form action="editar_pelicula.php" method="post">
+                        <input type="hidden" name="id" value="{{ pelicula.id }}">
+                        <button type="submit" class="borrar">
+                            ✏️ Editar
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if rol == "moderador" or rol == "superusuario" %}
+        <div class="coments">
+            <h2>Listado de Comentarios</h2>
+            
+            {% for Titulo, comentario in pelicula %}
             <div class="pelicula">
                 <h3>{{ Titulo }}</h3>
                 <ul class="comentarios_ul">
                     {% for c in comentario %}
-                        <li class="comentario_user">
-                            <p><strong>{{ c.autor }}</strong> <span>({{ c.fecha }})</span></p>
-                            <p>{{ c.comentario }}</p>
+                    <li class="comentario_user">
+                        <p><strong>{{ c.autor }}</strong> <span>({{ c.fecha }})</span></p>
+                        <p>{{ c.comentario }}</p>
 
-                            <div class="acciones-comentario">
-                                <form action="editar_comentario.php" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="{{ c.id }}">
-                                    <button type="submit">Editar</button>
-                                </form>
-                            
-                                <form action="borrar_comentario.php" method="post" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres borrar este comentario?');">
-                                    <input type="hidden" name="id" value="{{ c.id }}">
-                                    <button type="submit">Borrar</button>
-                                </form>
-                            </div>
+                        <div class="acciones-comentario">
+                            <form action="editar_comentario.php" method="post">
+                                <input type="hidden" name="id" value="{{ c.id }}">
+                                <button type="submit">Editar</button>
+                            </form>
+                        
+                            <form action="borrar_comentario.php" method="post">
+                                <input type="hidden" name="id" value="{{ c.id }}">
+                                <button type="submit">Borrar</button>
+                            </form>
+                        </div>
 
-                        </li>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
     </div>
-{% endif %}
 {% endblock %}

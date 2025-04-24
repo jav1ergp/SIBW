@@ -1,0 +1,51 @@
+{% extends "padre.html" %}
+{% block styles %}
+    <link rel="stylesheet" href="../styles/estilo.css">
+    <link rel="stylesheet" href="../styles/registro.css">
+{% endblock %}
+{% block main %}
+
+{% if rol == "gestor" %}
+<div class="comentarios">
+    <h2>Añadir Película</h2>
+
+    <div class="formulario">
+        <form method="POST" enctype="multipart/form-data">
+            <label>Título:
+                <input type="text" name="titulo" id="titulo" required>
+            </label>
+
+            <label>Fecha de estreno:
+                <input type="date" name="fecha" id="fecha" required>
+            </label>
+
+            <label>Género:
+                <input type="text" name="genero" id="genero" required>
+            </label>
+
+            <label>Director:
+                <input type="text" name="director" id="director" required>
+            </label>
+
+            <label>Actores principales:
+                <input type="text" name="actores" id="actores" required>
+            </label>
+
+            <label>Descripción:
+                <textarea name="descripcion" id="descripcion" rows="5" required></textarea>
+            </label>
+
+            <label>Imagen(Portada):
+                <input type="file" name="imagen" id="imagen" accept="image/*" required>
+            </label>
+            
+            {% if error2 %}
+                <p class="error">{{ error2 }}</p>
+            {% endif %}
+            
+            <button type="submit" name="añadirPelicula">Añadir Película</button>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,40 +1,21 @@
 {% extends "padre.html" %}
     {% block styles %}
         <link rel="stylesheet" href="../styles/estilo.css">
-        <link rel="stylesheet" href="../styles/panel.css">
+        <link rel="stylesheet" href="../styles/registro.css">
     {% endblock %}
     {% block main %}
     
     {% if rol == "moderador" %}
-    <div class="coments">
-        <h2>Listado de Comentarios</h2>
+    <div class="comentarios">
+        <h2>Borrar Comentario de {{ comentario.autor }}</h2>
         
-        {% for Titulo, comentario in pelicula %}
-            <div class="pelicula">
-                <h3>{{ Titulo }}</h3>
-                <ul class="comentarios_ul">
-                    {% for c in comentario %}
-                        <li class="comentario_user">
-                            <p><strong>{{ c.autor }}</strong> <span>({{ c.fecha }})</span></p>
-                            <p>{{ c.comentario }}</p>
-
-                            <div class="acciones-comentario">
-                                <form action="editar_comentario.php" method="post" style="display:inline;">
-                                    <input type="hidden" name="id" value="{{ c.id }}">
-                                    <button type="submit">Editar</button>
-                                </form>
-                            
-                                <form action="borrar_comentario.php" method="post" style="display:inline;" onsubmit="return confirm('¿Seguro que quieres borrar este comentario?');">
-                                    <input type="hidden" name="id" value="{{ c.id }}">
-                                    <button type="submit">Borrar</button>
-                                </form>
-                            </div>
-
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        {% endfor %}
+        <form method="POST">
+            <input type="hidden" name="id" value="{{ id }}">
+            <label class="Modificar_coment">Comentario
+                <textarea id="comentario" name="comentario" class="text_Modificar_coment" disabled> {{ comentario.comentario }} </textarea>
+            </label>
+            <button type="submit" id="submit" name="Borrar_coment">Enviar</button>
+        </form>     
     </div>
 {% endif %}
 {% endblock %}

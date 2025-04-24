@@ -10,22 +10,24 @@
         <div class="formulario">
             <form method="POST">
                 <label>Nombre:
-                    <input type="text" name="nombre" id="nombre" value="{{nombre}}" placeholder="Nombre" required>
+                    <input type="text" name="nombre" id="nombre" value="{{nombre}}" required>
                 </label>
                 <label>Email:
-                    <input type="text" name="correo" id="correo" value="{{email}}"placeholder="Correo" required>
+                    <input type="text" name="correo" id="correo" value="{{email}}" required>
                 </label>
                 <label>Contraseña:
-                    <input type="password" name="password" id="password" placeholder="Contraseña" required>
+                    <input type="password" name="password" id="password" required>
                 </label>
-                <label>Rol:
-                    <select name="rol" id="rol" required>
-                        <option value="registrado">Usuario registrado</option>
-                        <option value="moderador">Usuario moderador</option>
-                        <option value="gestor">Usuario gestor del sitio</option>
-                        <option value="superusuario">Superusuario</option>
-                    </select>
-                </label>
+                {% if rol == "superusuario"%}
+                    <label>Rol:
+                        <select name="rol" id="rol" required>
+                            <option value="registrado">Usuario registrado</option>
+                            <option value="moderador">Usuario moderador</option>
+                            <option value="gestor">Usuario gestor del sitio</option>
+                            <option value="superusuario">Superusuario</option>
+                        </select>
+                    </label>
+                {% endif %}
                 {% if error2 %}
                         <p class="error">{{ error2 }}</p>
                 {% endif %}

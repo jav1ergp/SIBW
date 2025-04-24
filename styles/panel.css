@@ -53,3 +53,30 @@ span {
     color: gray;
     font-style: italic;
 }
+
+.borrar, .editar {
+    background-color: white;
+    margin-bottom: 10px;
+    color: rgb(255, 123, 0);
+    cursor: pointer;
+    font-size: large;
+}
+
+.acciones-comentario {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.anadir {
+    color: rgb(255, 123, 0);
+    background-color: white;
+    cursor: pointer;
+    font-size: large;
+}
+
+.form-anadir {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}

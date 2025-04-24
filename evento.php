@@ -13,8 +13,10 @@
 
     if(isset($_SESSION['usuario'])){
         $usuario = true;
+        $rol = $_SESSION['usuario']['rol'];
     } else{
         $usuario = false;
+        $rol = "anonimo";
     }
 
     if(isset($_SESSION['error'])){
@@ -24,16 +26,20 @@
         $error = null;
     }
 
-    if (isset ($_GET['id'])){
+    if (isset($_GET['id'])) {
         $id = $_GET['id'];
-        if ($id < 1 || $id > 7) {
+        $Pelicula = getPelicula($id);
+        if ($id < 1 || $Pelicula === null) {
             $id = 1;
+            $Pelicula = getPelicula($id);
         }
     } else {
         $id = 1;
+        $Pelicula = getPelicula($id);
     }
     
-    $Pelicula = getPelicula($id);
+    
+    
     $Comentario = getComentarios($id);
     $Palabras = getPalabras();
     $Descripcion = $Pelicula['descripcion'];
@@ -56,6 +62,7 @@
         'comentarios' => $Comentario,
         'palabras' => $Palabras,
         'usuario' => $usuario,
+        'rol' => $rol,
         'error' => $error
     ]);
 ?>
