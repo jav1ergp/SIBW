@@ -72,14 +72,17 @@
                         <p>{{ c.comentario }}</p>
 
                         <div class="acciones-comentario">
-                            <form action="editar_comentario.php" method="post">
-                                <input type="hidden" name="id" value="{{ c.id }}">
-                                <button type="submit">Editar</button>
-                            </form>
-                        
                             <form action="borrar_comentario.php" method="post">
                                 <input type="hidden" name="id" value="{{ c.id }}">
-                                <button type="submit">Borrar</button>
+                                <button type="submit" class="borrar">
+                                    🗑️ Eliminar
+                                </button>
+                            </form>
+                            <form action="editar_comentario.php" method="post">
+                                <input type="hidden" name="id" value="{{ c.id }}">
+                                <button type="submit" class="borrar">
+                                    ✏️ Editar
+                                </button>
                             </form>
                         </div>
 

@@ -35,7 +35,6 @@
         $nombre = $_POST['nombre'];
         $email = $_POST['correo'];
         $password = $_POST['password'];
-        $rol = $_POST['rol'];
 
         $password_hashed = password_hash($password, PASSWORD_DEFAULT);
 
@@ -45,7 +44,7 @@
             exit;
         }
 
-        $registro = registrarUsuario($nombre, $email, $password_hashed, $rol);
+        $registro = registrarUsuario($nombre, $email, $password_hashed);
 
         if ($registro) {
             $usuarioValido = verificarUsuario($email, $password);
@@ -100,6 +99,23 @@
         } else {
             $_SESSION['error_modificar_coment'] = "Error al modificar el comentario.";
             $_SESSION['id'] = $id;
+            header("Location: editar_comentario.php");
+            exit;
+        }
+    }
+
+    if(isset($_POST['Añadir_coment'])) {
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $email = $_POST['email'];
+        $comentario = $_POST['comentario'];
+
+        $añadir = añadirComentario($nombre, $email, $comentario, $id);
+
+        if ($añadir) {
+            header("Location: index.php?id=$id");
+            exit;
+        } else {
             header("Location: editar_comentario.php");
             exit;
         }

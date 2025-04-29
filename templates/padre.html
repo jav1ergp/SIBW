@@ -47,8 +47,9 @@
             <a></a>
             <a href="index.php">Inicio</a>
             <a href="#">Cartelera</a>
-            {% if usuario %}
+            {% if usuario and rol != "registrado" %}
                 <a href="panel.php">Panel Control</a>
+            {% elseif rol == "registrado" %}
             {% else %}
                 <a href="registro.php">Registro</a>
             {% endif%}

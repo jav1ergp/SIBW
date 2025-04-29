@@ -11,7 +11,7 @@
         session_start();
     }
 
-    if(isset($_SESSION['usuario'])){
+    if(isset($_SESSION['usuario']) and ($_SESSION['usuario']['rol'] != "registrado")){
         $usuario = true;
         $rol = $_SESSION['usuario']['rol'];
     } else {

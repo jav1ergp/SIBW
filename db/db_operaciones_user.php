@@ -22,13 +22,14 @@
         return false;
     }
 
-    function registrarUsuario($nombre, $email, $password, $rol) {
+    function registrarUsuario($nombre, $email, $password) {
         global $conn;
 
         if (!esValido($email)){
             return False;
         }
-        
+        $rol = "registrado";
+
         $stmt = $conn->prepare("INSERT INTO Usuarios (Email, Nombre, Passwordd, Rol) VALUES (?,?,?,?)");
         $stmt->bind_param("ssss", $email, $nombre, $password, $rol);
 
@@ -63,6 +64,18 @@
         $stmt = $conn->prepare("UPDATE Usuarios SET Nombre=?, Email=?, Passwordd=?, Rol=? WHERE Email=?");
         $stmt->bind_param("sssss", $nombre, $email, $password, $rol, $email_viejo);
     
+        return $stmt->execute();
+    }
+
+    function añadirComentario($nombre, $email, $comentario, $idPelicula) {
+        global $conn;
+
+        $date = date("Y-m-d H:i:s");
+        $editado = false;
+        
+        $stmt = $conn->prepare("INSERT INTO Comentario (Autor, Fecha, Email, Comentario, idPelicula, Editado) VALUES (?,?,?,?,?,?)");
+        $stmt->bind_param("sssssi", $nombre, $date, $email, $comentario, $idPelicula, $editado);
+
         return $stmt->execute();
     }
 
@@ -116,17 +129,26 @@
         global $conn;
 
         $stmt = $conn->prepare("UPDATE Pelicula SET Titulo = ?, Fecha = ?, Genero = ?, Director = ?, Actores = ?, descripcion = ? WHERE id = ?");
-    
+        $stmt->bind_param("ssssssi", $titulo, $date, $genero, $director, $actores, $descripcion, $id);
+
         if (!$stmt) {
             return false;
         }
-        
-        $stmt->bind_param("ssssssi", $titulo, $date, $genero, $director, $actores, $descripcion, $id);
 
         $result = $stmt->execute();
         $stmt->close();
         
-        return $result;
+        $stmt2 = $conn->prepare("UPDATE Imagenes SET Nombre = ? WHERE idPelicula = ?");
+        $stmt2->bind_param("si", $titulo, $id);
+
+        if (!$stmt2) {
+            return false;
+        }
+
+        $result2 = $stmt2->execute();
+        $stmt2->close();
+
+        return $result && $result2;
     }
 
     function añadirImagenPortada($titulo, $imagen, $idPelicula) {

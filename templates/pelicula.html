@@ -16,20 +16,21 @@
             <div class="comentarios">
                 {% if rol != "anonimo" %}
                 <div class="formulario">
-                    <form>
+                    <form method="POST" action="" id="form">
+                        <input type="hidden" name="id" value="{{ id }}">
                         <label>Nombre:
-                            <input type="text" id="nombre" placeholder="Nombre">
+                            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
                         </label>
                         <label>Email:
-                            <input type="text" id="correo" placeholder="Correo">
+                            <input type="text" name="email" id="correo" placeholder="Correo">
                         </label>
                         <label>Comentario:
-                            <textarea id="comentario"></textarea>
+                            <textarea name="comentario" id="comentario"></textarea>
                         </label>
                         {% if usuario %}
-                            <button type="button" id="submit">Enviar</button>
+                            <button type="submit" name="Añadir_coment" id="submit">Enviar</button>
                         {% else %}
-                            <button type="button" id="submit" disabled>Enviar</button>
+                            <button type="submit" id="submit" disabled>Enviar</button>
                         {% endif%}
                         <div id="palabras">
                             {%for palabra in palabras%}

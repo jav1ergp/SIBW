@@ -21,13 +21,15 @@
 
     if (isset ($_POST['id'])){
         $id = $_POST['id'];
+    } else {
+        header("Location: index.php");
+        exit;
     }
 
     if(isset($_SESSION['error_modificar_coment'])){
         $error2 = $_SESSION['error_modificar_coment'];
         $id = $_SESSION['id'];
         unset($_SESSION['error_modificar_coment']);
-        
     } else{
         $error2 = null;
     }

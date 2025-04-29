@@ -38,8 +38,6 @@
         $Pelicula = getPelicula($id);
     }
     
-    
-    
     $Comentario = getComentarios($id);
     $Palabras = getPalabras();
     $Descripcion = $Pelicula['descripcion'];

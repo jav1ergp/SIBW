@@ -17,7 +17,7 @@ function show_coments() {
 // Mostrar cada comentario
 const seccion_coments = document.querySelector(".coments");
 const enviar = document.getElementById("submit");
-enviar.addEventListener("click", save_comments);
+enviar.addEventListener("submit", save_comments);
 
 function save_comments() {
     const nombre = document.getElementById("nombre").value.trim();
@@ -32,7 +32,7 @@ function save_comments() {
     // Validacion correo
     if (!/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]$/.test(correo)) {
         document.getElementById("correo").value = "";
-        alert("Correo Incorrecto");        
+        alert("Correo Incorrecto");
         return;
     }
 

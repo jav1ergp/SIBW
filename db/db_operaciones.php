@@ -3,8 +3,16 @@
         esNumero($id);
         global $conn;
         
-        $sql = "SELECT Titulo, Fecha, Genero, Director, Actores, descripcion FROM Pelicula WHERE id = $id";
-        $result = $conn->query($sql);
+        $sql = "SELECT Titulo, Fecha, Genero, Director, Actores, descripcion FROM Pelicula WHERE id = ?";
+    
+        $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
         $row = $result->fetch_assoc();
 
         if (!$row) {

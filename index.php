@@ -19,16 +19,20 @@
         $error = null;
     }
 
-    if(isset($_SESSION['usuario']))
+    if(isset($_SESSION['usuario'])){
         $usuario = true;
-    else
+        $rol = $_SESSION['usuario']['rol'];
+    }else{
         $usuario = false;
-
+        $rol = "anonimo";
+    }
+    
     $ImagenesIndex = getImagenesIndex();
 
     echo $twig->render('portada.html', [
         'imagenes' => $ImagenesIndex,
         'usuario' => $usuario,
-        'error' => $error
+        'error' => $error,
+        'rol' => $rol
     ]);
 ?>
