@@ -11,7 +11,7 @@
         session_start();
     }
 
-    if(isset($_SESSION['usuario']) and ($_SESSION['usuario']['rol'] == "gestor" || "superusuario")){
+    if (isset($_SESSION['usuario']) && ($_SESSION['usuario']['rol'] == "gestor" || $_SESSION['usuario']['rol'] == "superusuario")) {
         $usuario = true;
         $rol = $_SESSION['usuario']['rol'];
     } else {

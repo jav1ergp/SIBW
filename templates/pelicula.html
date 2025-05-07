@@ -28,7 +28,7 @@
                             <textarea name="comentario" id="comentario"></textarea>
                         </label>
                         {% if usuario %}
-                            <button type="submit" name="Añadir_coment" id="submit">Enviar</button>
+                            <button type="submit" name="Añadir_coment">Enviar</button>
                         {% else %}
                             <button type="submit" id="submit" disabled>Enviar</button>
                         {% endif%}
@@ -45,6 +45,22 @@
                         <div class="comentario_user">
                             <p><strong>{{ comentario.autor }}</strong> <span>{{ comentario.fecha }}</span></p>
                             <p>{{ comentario.comentario }}</p>
+                            {% if rol == "moderador" or rol == "superusuario" %}
+                                <div class="acciones-comentario">
+                                    <form action="borrar_comentario.php" method="post">
+                                        <input type="hidden" name="id" value="{{ comentario.id }}">
+                                        <button type="submit" class="borrar">
+                                            🗑️ Eliminar
+                                        </button>
+                                    </form>
+                                    <form action="editar_comentario.php" method="post">
+                                        <input type="hidden" name="id" value="{{ comentario.id }}">
+                                        <button type="submit" class="borrar">
+                                            ✏️ Editar
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif%}
                         </div>
                     {% endfor %}
                 </div>
@@ -58,6 +74,22 @@
                     </figure>
                 {% endfor %}
             </div>
+            {% if rol == "gestor" or rol == "superusuario" %}
+                <div class="acciones-comentario">
+                    <form action="borrar_pelicula.php" method="post">
+                        <input type="hidden" name="id" value="{{ pelicula.id }}">
+                        <button type="submit" class="borrar">
+                            🗑️ Eliminar
+                        </button>
+                    </form>
+                    <form action="editar_pelicula.php" method="post">
+                        <input type="hidden" name="id" value="{{ pelicula.id }}">
+                        <button type="submit" class="borrar">
+                            ✏️ Editar
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
             <h2>{{ pelicula.titulo }} </h2>
             <p><strong>Fecha de estreno:</strong> {{ pelicula.fecha }}</p>
             <p><strong>Género:</strong> {{ pelicula.genero}}</p>

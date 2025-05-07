@@ -30,7 +30,7 @@
     height: 50px;
 }
 
-.comentarios button {
+.comentarios button{
     background-color: blue;
     color: white;
     padding: 10px;
@@ -38,6 +38,15 @@
     float: right;
     width: 50%;
     cursor: pointer;
+}
+
+.comentarios button.borrar{
+    width: 70%;
+    padding: 4px;
+    background-color: white;
+    color: rgb(255, 123, 0);
+    cursor: pointer;
+    font-size: small;
 }
 
 .coments {

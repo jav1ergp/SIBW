@@ -3,7 +3,7 @@
         esNumero($id);
         global $conn;
         
-        $sql = "SELECT Titulo, Fecha, Genero, Director, Actores, descripcion FROM Pelicula WHERE id = ?";
+        $sql = "SELECT Titulo, Fecha, Genero, Director, Actores, descripcion, id FROM Pelicula WHERE id = ?";
     
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
@@ -27,7 +27,8 @@
             'genero' => $row["Genero"],
             'director' => $row["Director"],
             'actores' => $row["Actores"],
-            'descripcion' => $row["descripcion"]
+            'descripcion' => $row["descripcion"], 
+            'id' => $row["id"]
         );
         
         return $pelicula;
@@ -73,7 +74,7 @@
         esNumero($id);
         global $conn;
         
-        $sql = "SELECT Autor, Fecha, Email, Comentario FROM Comentario WHERE idPelicula = $id";
+        $sql = "SELECT Autor, Fecha, Email, Comentario, id FROM Comentario WHERE idPelicula = $id";
         $result = $conn->query($sql);
         $comentarios = array();
 
@@ -82,7 +83,8 @@
                 'autor' => $row["Autor"],
                 'fecha' => $row["Fecha"],
                 'email' => $row["Email"],
-                'comentario' => $row["Comentario"]
+                'comentario' => $row["Comentario"],
+                'id' => $row["id"]
             ];
         }
 

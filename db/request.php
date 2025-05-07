@@ -75,9 +75,8 @@
         $modificar = modificarUsuario($nombre, $email, $email_viejo, $password_hashed, $rol);
 
         if ($modificar) {
-            $_SESSION['usuario'] = [];
-            session_unset();
-            session_destroy();
+            $usuarioValido = verificarUsuario($email, $password);
+            $_SESSION['usuario'] = $usuarioValido;
             header("Location: index.php");
             exit;
         } else {
