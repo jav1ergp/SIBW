@@ -108,7 +108,7 @@
         esNumero($id);
         global $conn;
 
-        $sql = "SELECT imagen, Nombre FROM Imagenes WHERE idPelicula = $id AND es_index = 0";
+        $sql = "SELECT imagen, Nombre, id FROM Imagenes WHERE idPelicula = $id AND es_index = 0";
         $result = $conn->query($sql);
         $imagenes = array();
     
@@ -116,7 +116,8 @@
             while ($row = $result->fetch_assoc()) {
                 $imagenes[] = [
                     'imagen' => base64_encode($row["imagen"]),
-                    'nombre' => $row["Nombre"]
+                    'nombre' => $row["Nombre"],
+                    'id' => $row["id"]
                 ];
             }
         }
@@ -152,7 +153,7 @@
     function getComentPeliculas(){
         global $conn;
 
-        $sql = "SELECT Pelicula.Titulo, Comentario.id, Comentario.Comentario, Comentario.Autor, Comentario.Email, Comentario.Fecha, Comentario.Editado
+        $sql = "SELECT Pelicula.Titulo, Comentario.id, Comentario.Comentario, Comentario.Autor, Comentario.Email, Comentario.Fecha
                 FROM Pelicula JOIN Comentario 
                 ON Pelicula.id = Comentario.idPelicula";
         $result = $conn->query($sql);
@@ -171,7 +172,6 @@
                 'autor' => $row['Autor'],
                 'fecha' => $row['Fecha'],
                 'id' => $row['id'],
-                'editado' => $row['Editado'] ?? false
             ];
         }
 

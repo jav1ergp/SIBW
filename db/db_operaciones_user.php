@@ -71,10 +71,9 @@
         global $conn;
 
         $date = date("Y-m-d H:i:s");
-        $editado = false;
         
-        $stmt = $conn->prepare("INSERT INTO Comentario (Autor, Fecha, Email, Comentario, idPelicula, Editado) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param("sssssi", $nombre, $date, $email, $comentario, $idPelicula, $editado);
+        $stmt = $conn->prepare("INSERT INTO Comentario (Autor, Fecha, Email, Comentario, idPelicula) VALUES (?,?,?,?,?)");
+        $stmt->bind_param("sssss", $nombre, $date, $email, $comentario, $idPelicula);
 
         return $stmt->execute();
     }
@@ -138,7 +137,7 @@
         $result = $stmt->execute();
         $stmt->close();
         
-        $stmt2 = $conn->prepare("UPDATE Imagenes SET Nombre = ? WHERE idPelicula = ?");
+        $stmt2 = $conn->prepare("UPDATE Imagenes SET Nombre = ? WHERE idPelicula = ? and es_index = 1");
         $stmt2->bind_param("si", $titulo, $id);
 
         if (!$stmt2) {
@@ -173,4 +172,29 @@
     
         return $stmt->execute();
     }
+
+    function borrar_imagen($id) {
+        global $conn;
+    
+        $stmt = $conn->prepare("DELETE FROM Imagenes WHERE id = ?");
+        $stmt->bind_param("i", $id);
+    
+        return $stmt->execute();
+    }
+    
+    function editar_imagen($id, $imagen, $titulo) {
+        global $conn;
+    
+        // 1. Actualizar la imagen de tipo index para la película con el id proporcionado
+        $stmt = $conn->prepare("UPDATE Imagenes SET Nombre = ?, imagen = ? WHERE idPelicula = ? AND es_index = 1");
+        $stmt->send_long_data(1, $imagen); // Enviar la imagen binaria
+        $stmt->bind_param("ssi", $titulo, $imagen, $id); // "s" para el nombre y "i" para el idPelicula
+    
+        return $stmt->execute();
+    }
+    
+    
+    
+    
+
 ?>

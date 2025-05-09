@@ -1,0 +1,7 @@
+super - super
+gestor - gestor
+moderador - moderador
+registrado - registrado
+super2 - super
+
+*No se puede repetir email al registrarse un usuario

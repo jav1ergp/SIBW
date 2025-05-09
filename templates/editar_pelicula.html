@@ -37,6 +37,10 @@
                 <textarea name="descripcion" id="descripcion" rows="5" required>{{ pelicula.descripcion }}</textarea>
             </label>
 
+            <label>Imagen Index:
+                <input type="file" name="imagen_index" id="imagen_index" accept="image/*">
+            </label>
+
             <label>Imagenes:
                 <input type="file" name="imagen" id="imagen" accept="image/*">
             </label>
@@ -44,6 +48,16 @@
             <label>Imagen Título:
                 <input type="text" name="imagen_titulo" id="imagen_titulo">
             </label>
+
+            <label>Borrar imagen:
+                <select name="imagen_seleccionada">
+                    <option value="">No borrar ninguna imagen</option>
+                    {% for imagen in imagenes %}
+                        <option value="{{ imagen.id  }}">{{ imagen.nombre }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            
 
             {% if error %}
                 <p class="error">{{ error }}</p>

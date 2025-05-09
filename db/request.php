@@ -108,11 +108,11 @@
         $nombre = $_POST['nombre'];
         $email = $_POST['email'];
         $comentario = $_POST['comentario'];
-
+        
         $añadir = añadirComentario($nombre, $email, $comentario, $id);
 
         if ($añadir) {
-            header("Location: index.php?id=$id");
+            header("Location: evento.php?id=$id");
             exit;
         } else {
             header("Location: editar_comentario.php");
@@ -172,16 +172,30 @@
         if(isset( $_POST['imagen_titulo'])){
             $imagen_titulo = $_POST['imagen_titulo'];
         }
-
+        
+        $borrar_imagen = $_POST['imagen_seleccionada'];
+        
+        
+        borrar_imagen($borrar_imagen);
+        
+        
         $pelicula = editarPelicula($id, $titulo, $date, $genero, $director, $actores, $descripcion);
         
+        if ($pelicula && $_FILES['imagen_index']['error'] === UPLOAD_ERR_OK) {
+            $imagen_tmp = $_FILES['imagen_index']['tmp_name'];
+            $imagen_data = file_get_contents($imagen_tmp);
+        
+            editar_imagen($id, $imagen_data, $titulo);  // Actualizar imagen index
+        }
+        
+
         if ($pelicula && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
             $imagen_tmp = $_FILES['imagen']['tmp_name'];
             $imagen_data = file_get_contents($imagen_tmp);
     
             añadirImagen($imagen_titulo, $imagen_data, $id);
         }
-
+        
         if ($pelicula) {
             header("Location: index.php");
             exit;

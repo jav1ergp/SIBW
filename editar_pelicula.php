@@ -24,11 +24,13 @@
     }
 
     $pelicula = getPelicula($id);
+    $imagenes = getImagenes($id);
 
     echo $twig->render("editar_pelicula.html", [
         'usuario' => $usuario,
         'rol' => $rol,
         'pelicula' => $pelicula,
-        'id' => $id
+        'id' => $id,
+        'imagenes' => $imagenes
     ]);
 ?>

@@ -28,13 +28,11 @@
                             <textarea name="comentario" id="comentario"></textarea>
                         </label>
                         {% if usuario %}
-                            <button type="submit" name="Añadir_coment">Enviar</button>
-                        {% else %}
-                            <button type="submit" id="submit" disabled>Enviar</button>
+                            <button type="submit" id="send" name="Añadir_coment">Enviar</button>
                         {% endif%}
                         <div id="palabras">
                             {%for palabra in palabras%}
-                                {{palabra}}
+                                {{ palabra }}
                             {%endfor%}
                         </div>
                     </form>
