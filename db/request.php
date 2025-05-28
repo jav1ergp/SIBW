@@ -7,6 +7,7 @@
         session_start();
     }
 
+    // Login
     if(isset($_POST['login'])) {
         $email = $_POST['correo'];
         $password = $_POST['password'];
@@ -22,6 +23,7 @@
         }
     }
 
+    // Logout
     if(isset($_POST['logout'])) {
         $_SESSION['usuario'] = [];
         session_unset();
@@ -31,6 +33,7 @@
         exit;
     }
 
+    // Registro
     if(isset($_POST['registro'])) {
         $nombre = $_POST['nombre'];
         $email = $_POST['correo'];
@@ -59,6 +62,7 @@
         }
     }
 
+    // Modificar usuario
     if(isset($_POST['modificar']) and isset($_SESSION['usuario'])) {
         $nombre = $_POST['nombre'];
         $email = $_POST['correo'];
@@ -86,7 +90,8 @@
         }
     }
 
-    if(isset($_POST['Modificar_coment'])) {
+    // Modificar comentario
+    if(isset($_POST['modificar_coment'])) {
         $comentario = $_POST['comentario'];
         $id = $_POST['id'];
 
@@ -95,14 +100,10 @@
         if ($modificar) {
             header("Location: index.php");
             exit;
-        } else {
-            $_SESSION['error_modificar_coment'] = "Error al modificar el comentario.";
-            $_SESSION['id'] = $id;
-            header("Location: editar_comentario.php");
-            exit;
         }
     }
 
+    // Añadir comentario
     if(isset($_POST['Añadir_coment'])) {
         $id = $_POST['id'];
         $nombre = $_POST['nombre'];
@@ -115,12 +116,13 @@
             header("Location: evento.php?id=$id");
             exit;
         } else {
-            header("Location: editar_comentario.php");
+            header("Location: index.php");
             exit;
         }
     }
 
-    if(isset($_POST['Borrar_coment'])) {
+    //Borrar comentario
+    if(isset($_POST['borrar_coment'])) {
         $id = $_POST['id'];
 
         borrarComentario($id);
@@ -129,7 +131,8 @@
         exit;        
     }
 
-    if(isset($_POST['Borrar_pelicula'])) {
+    // Borrar pelicula
+    if(isset($_POST['borrar_pelicula'])) {
         $id = $_POST['id'];
 
         borrarPelicula($id);
@@ -138,6 +141,7 @@
         exit;        
     }
 
+    // Añadir pelicula
     if(isset($_POST['añadirPelicula'])) {
         $titulo = $_POST['titulo'];
         $date = $_POST['fecha'];
@@ -161,6 +165,7 @@
         }
     }
 
+    // Editar pelicula
     if(isset($_POST['editarPelicula'])) {
         $id = $_POST['id'];
         $titulo = $_POST['titulo'];
@@ -176,7 +181,7 @@
         $borrar_imagen = $_POST['imagen_seleccionada'];
         
         
-        borrar_imagen($borrar_imagen);
+        borrar_imagen($borrar_imagen); // Borrar imagen dentro
         
         
         $pelicula = editarPelicula($id, $titulo, $date, $genero, $director, $actores, $descripcion);
@@ -193,7 +198,7 @@
             $imagen_tmp = $_FILES['imagen']['tmp_name'];
             $imagen_data = file_get_contents($imagen_tmp);
     
-            añadirImagen($imagen_titulo, $imagen_data, $id);
+            añadirImagen($imagen_titulo, $imagen_data, $id); // Añadir imagen dentro
         }
         
         if ($pelicula) {
@@ -206,6 +211,7 @@
         }
     }
 
+    // Modificar rol usuario
     if(isset($_POST['modificarRol'])) {
         $email = $_POST['email'];
         $rol = $_POST['rol'];

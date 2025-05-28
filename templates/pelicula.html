@@ -27,9 +27,7 @@
                         <label>Comentario:
                             <textarea name="comentario" id="comentario"></textarea>
                         </label>
-                        {% if usuario %}
-                            <button type="submit" id="send" name="Añadir_coment">Enviar</button>
-                        {% endif%}
+                        <button type="submit" id="send" name="Añadir_coment">Enviar</button>
                         <div id="palabras">
                             {%for palabra in palabras%}
                                 {{ palabra }}
@@ -44,7 +42,7 @@
                             <p><strong>{{ comentario.autor }}</strong> <span>{{ comentario.fecha }}</span></p>
                             <p>{{ comentario.comentario }}</p>
                             {% if rol == "moderador" or rol == "superusuario" %}
-                                <div class="acciones-comentario">
+                                <div class="acciones_comentario">
                                     <form action="borrar_comentario.php" method="post">
                                         <input type="hidden" name="id" value="{{ comentario.id }}">
                                         <button type="submit" class="borrar">
@@ -73,7 +71,7 @@
                 {% endfor %}
             </div>
             {% if rol == "gestor" or rol == "superusuario" %}
-                <div class="acciones-comentario">
+                <div class="acciones_comentario">
                     <form action="borrar_pelicula.php" method="post">
                         <input type="hidden" name="id" value="{{ pelicula.id }}">
                         <button type="submit" class="borrar">

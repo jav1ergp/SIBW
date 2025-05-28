@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
     
     // Mostrar cada comentario
-    const seccion_coments = document.querySelector(".coments");
     const enviar = document.getElementById("form");
     enviar.addEventListener("submit", save_comments);
     

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Crunchyroll</title>
+    <script src="../js/busqueda.js" defer></script>
     {% block styles %}
     {% endblock %}
 </head>
@@ -60,6 +61,10 @@
     </header>
     <div class="pagina">
         <aside>
+            <div class="buscador">  
+                <input type="text" id="busqueda" placeholder="Buscar películas...">  
+                <div id="resultados-busqueda"></div>  
+            </div>
             <h2>Enlaces de Interés</h2>
             <ul>
                 <li><a href="https://www.crunchyroll.com" target="_blank">Crunchyroll</a></li>

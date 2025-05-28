@@ -27,6 +27,6 @@
     echo $twig->render("editar_user.html", [
         'usuario' => $usuario,
         'rol' => $rol,
-        'Usuarios' => $Usuarios,
+        'Usuarios' => $Usuarios
     ]);
 ?>

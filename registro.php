@@ -16,13 +16,7 @@
         header("Location: index.php");
         exit;
     } 
-    
-    if(isset($_SESSION['error'])){
-        $error = $_SESSION['error'];
-        unset($_SESSION['error']);
-    } else{
-        $error = null;
-    }
+
     if(isset($_SESSION['error_registro'])){
         $error2 = $_SESSION['error_registro'];
         unset($_SESSION['error_registro']);
@@ -31,7 +25,6 @@
     }
 
     echo $twig->render('registro.html', [
-        'error' => $error,
         'error2' => $error2
     ]);
 ?>

@@ -31,7 +31,7 @@
     border-bottom: 1px solid grey;
 }
 
-.comentario-item:last-child {
+.comentario_user:last-child {
     border-bottom: none;
 }
 
@@ -43,15 +43,10 @@ span {
     float: right;
 }
 
-.acciones-comentario a {
+.acciones_comentario a {
     margin-right: 10px;
     text-decoration: none;
     font-size: 1.2em;
-}
-
-.editado {
-    color: gray;
-    font-style: italic;
 }
 
 .borrar, .editar {
@@ -62,21 +57,8 @@ span {
     font-size: large;
 }
 
-.acciones-comentario {
+.acciones_comentario {
     display: flex;
     gap: 10px;
-    justify-content: center;
-}
-
-.anadir {
-    color: rgb(255, 123, 0);
-    background-color: white;
-    cursor: pointer;
-    font-size: large;
-}
-
-.form-anadir {
-    margin-bottom: 20px;
-    display: flex;
     justify-content: center;
 }

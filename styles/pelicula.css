@@ -62,17 +62,15 @@
     display: none;
 }
 
-.acciones-comentario {
+.acciones_comentario {
     display: flex;
     gap: 10px;
     justify-content: center;
     margin: 10px;
 }
 
-.acciones-comentario a {
+.acciones_comentario a {
     margin: 10px;
-    text-decoration: none;
-    font-size: 1.2em;
 }
 
 .borrar, .editar {

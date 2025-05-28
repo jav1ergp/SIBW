@@ -18,7 +18,6 @@
         header("Location: index.php");
         exit;
     }
-
     
     echo $twig->render("añadir_pelicula.html", [
         'usuario' => $usuario,

@@ -41,7 +41,7 @@
                 <input type="file" name="imagen_index" id="imagen_index" accept="image/*">
             </label>
 
-            <label>Imagenes:
+            <label>Añadir Imagen:
                 <input type="file" name="imagen" id="imagen" accept="image/*">
             </label>
 
@@ -57,12 +57,6 @@
                     {% endfor %}
                 </select>
             </label>
-            
-
-            {% if error %}
-                <p class="error">{{ error }}</p>
-            {% endif %}
-
             <button type="submit" name="editarPelicula">Guardar Cambios</button>
         </form>
     </div>

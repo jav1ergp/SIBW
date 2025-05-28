@@ -1,23 +1,15 @@
 <?php
+    // Datos 1 pelicula
     function getPelicula($id) {
         esNumero($id);
         global $conn;
         
-        $sql = "SELECT Titulo, Fecha, Genero, Director, Actores, descripcion, id FROM Pelicula WHERE id = ?";
-    
-        $stmt = $conn->prepare($sql);
-        if (!$stmt) {
-            return null;
-        }
-
+        $stmt = $conn->prepare("SELECT Titulo, Fecha, Genero, Director, Actores, descripcion, id FROM Pelicula WHERE id = ?");
         $stmt->bind_param("i", $id);
         $stmt->execute();
+    
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-
-        if (!$row) {
-            return null;
-        }
         
         $fecha = date("Y-m-d", strtotime($row["Fecha"]));
 
@@ -34,6 +26,7 @@
         return $pelicula;
     }
 
+    // Datos todas las peliculas
     function getPeliculas() {
         global $conn;
         
@@ -52,6 +45,7 @@
         return $peliculas;
     }
 
+    // Datos todos los usuarios
     function getUsuarios() {
         global $conn;
         
@@ -70,32 +64,39 @@
         return $usuarios;
     }
 
+    // Datos 1 comentario
     function getComentarios($id) {
         esNumero($id);
         global $conn;
         
-        $sql = "SELECT Autor, Fecha, Email, Comentario, id FROM Comentario WHERE idPelicula = $id";
-        $result = $conn->query($sql);
-        $comentarios = array();
+        $stmt = $conn->prepare("SELECT Autor, Fecha, Email, Comentario, id FROM Comentario WHERE idPelicula = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        $comentarios = [];
 
         while ($row = $result->fetch_assoc()) {
-            $comentarios[] = [
+            $comentarios[] = array(
                 'autor' => $row["Autor"],
                 'fecha' => $row["Fecha"],
                 'email' => $row["Email"],
                 'comentario' => $row["Comentario"],
                 'id' => $row["id"]
-            ];
+            );
         }
 
         return $comentarios;
     }
 
+    // Datos todas las palabras prohibidas
     function getPalabras(){
         global $conn;
 
         $sql = "SELECT Palabra FROM Palabras";
         $result = $conn->query($sql);
+
+        $palabras = [];
 
         while($row = $result->fetch_assoc()) {
             $palabras[] = $row['Palabra'];
@@ -104,52 +105,56 @@
         return $palabras;
     }
 
+    // Datos 1 imagen
     function getImagenes($id) {
         esNumero($id);
         global $conn;
 
         $sql = "SELECT imagen, Nombre, id FROM Imagenes WHERE idPelicula = $id AND es_index = 0";
         $result = $conn->query($sql);
-        $imagenes = array();
+        $imagenes = [];
     
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $imagenes[] = [
+                $imagenes[] = array(
                     'imagen' => base64_encode($row["imagen"]),
                     'nombre' => $row["Nombre"],
                     'id' => $row["id"]
-                ];
+                );
             }
         }
     
         return $imagenes;
     }
 
+    // Datos de todas las imagenes de las portadas
     function getImagenesIndex(){
         global $conn;
         $sql = "SELECT imagen, Nombre, idPelicula FROM Imagenes WHERE es_index = 1";
         $result = $conn->query($sql);
-        $imagenesIndex = array();
+        $imagenesIndex = [];
     
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $imagenesIndex[] = [
+                $imagenesIndex[] = array(
                     'imagen' => base64_encode($row["imagen"]),
                     'titulo' => $row["Nombre"],
                     'id' => $row["idPelicula"]
-                ];
+                );
             }
         }
     
         return $imagenesIndex;
     }
 
+    // Comprueba si id es un numero
     function esNumero($id){
         if(!is_numeric($id)){
             die("Error en la URL");
         }
     }
 
+    // Datos de los comentarios de todas las peliculas
     function getComentPeliculas(){
         global $conn;
 
@@ -158,26 +163,27 @@
                 ON Pelicula.id = Comentario.idPelicula";
         $result = $conn->query($sql);
 
-        $comentarios_por_pelicula = [];
+        $comentarios_pelicula = [];
 
         while ($row = $result->fetch_assoc()) {
             $titulo = $row['Titulo'];
         
-            if (!isset($comentarios_por_pelicula[$titulo])) {
-                $comentarios_por_pelicula[$titulo] = [];
+            if (!isset($comentarios_pelicula[$titulo])) {
+                $comentarios_pelicula[$titulo] = [];
             }
         
-            $comentarios_por_pelicula[$titulo][] = [
+            $comentarios_pelicula[$titulo][] = array(
                 'comentario' => $row['Comentario'],
                 'autor' => $row['Autor'],
                 'fecha' => $row['Fecha'],
                 'id' => $row['id'],
-            ];
+            );
         }
 
-        return $comentarios_por_pelicula;
+        return $comentarios_pelicula;
     }
 
+    // Datos 1 comentario
     function getComentario($id) {
         esNumero($id);
         global $conn;
@@ -196,6 +202,7 @@
         return $comentario;
     }
 
+    // Datos 1 usuario
     function getUsuario($email) {    
         global $conn;
     
@@ -216,7 +223,7 @@
         ];
     }
     
-
+    // Cambia el rol
     function modificarRol($email, $rol) {    
         global $conn;
     
@@ -226,6 +233,7 @@
         return $stmt->execute();
     }
 
+    // Cuenta los supers del sistema
     function contarSupers() {
         global $conn;
     
@@ -237,6 +245,26 @@
     
         return $row['total'];
     }
-    
 
+
+    function buscarPeliculas($peli) {
+        global $conn;
+
+        $peli = "%" . $peli . "%";
+        $stmt = $conn->prepare("SELECT Titulo, id FROM Pelicula WHERE Titulo LIKE ?");
+        $stmt->bind_param("s", $peli);
+        $stmt->execute();
+        
+        $result = $stmt->get_result();
+        
+        $peliculas = [];
+        while ($row = $result->fetch_assoc()) {
+            $peliculas[] = array(
+                'titulo' => $row["Titulo"],
+                'id' => $row["id"]
+            );
+        }
+        
+        return $peliculas;
+    }
 ?>

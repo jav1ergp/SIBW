@@ -46,12 +46,12 @@
     border: none;
 }
 
-.comentarios .Modificar_coment {
+.comentarios .modificar_coment {
     color: rgb(255, 123, 0);
     
 }
 
-.text_Modificar_coment {
+.text_modificar_coment {
     width: 400px;
     height: 400px;
     resize: vertical;

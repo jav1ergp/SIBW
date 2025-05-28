@@ -13,7 +13,7 @@
             {% for user in usuarios %}
             <div class="pelicula">
                 <h3>{{ user.email }}</h3>
-                <div class="acciones-comentario">
+                <div class="acciones_comentario">
                     <form action="editar_user.php" method="post">
                         <input type="hidden" name="email" value="{{ user.email }}">
                         <button type="submit" class="borrar">
@@ -30,8 +30,8 @@
         <div class="coments">
             <h2>Listado de Películas</h2>
             
-            <form action="añadir_pelicula.php" method="post" class="form-anadir">
-                <button type="submit" class="anadir">
+            <form action="añadir_pelicula.php" method="post">
+                <button type="submit" class="borrar">
                     ➕ Añadir Película
                 </button>
             </form>
@@ -39,7 +39,7 @@
             {% for pelicula in pelicula_borrar %}
             <div class="pelicula">
                 <h3>{{ pelicula.titulo }}</h3>
-                <div class="acciones-comentario">
+                <div class="acciones_comentario">
                     <form action="borrar_pelicula.php" method="post">
                         <input type="hidden" name="id" value="{{ pelicula.id }}">
                         <button type="submit" class="borrar">
@@ -71,7 +71,7 @@
                         <p><strong>{{ c.autor }}</strong> <span>({{ c.fecha }})</span></p>
                         <p>{{ c.comentario }}</p>
 
-                        <div class="acciones-comentario">
+                        <div class="acciones_comentario">
                             <form action="borrar_comentario.php" method="post">
                                 <input type="hidden" name="id" value="{{ c.id }}">
                                 <button type="submit" class="borrar">

@@ -26,21 +26,12 @@
         exit;
     }
 
-    if(isset($_SESSION['error_modificar_coment'])){
-        $error2 = $_SESSION['error_modificar_coment'];
-        $id = $_SESSION['id'];
-        unset($_SESSION['error_modificar_coment']);
-    } else{
-        $error2 = null;
-    }
-
     $comentario = getComentario($id);
 
     echo $twig->render("editar_comentario.html", [
         'usuario' => $usuario,
         'rol' => $rol,
         'comentario' => $comentario,
-        'id' => $id,
-        'error_coment'=> $error2
+        'id' => $id
     ]);
 ?>
